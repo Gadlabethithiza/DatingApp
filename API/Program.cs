@@ -11,10 +11,7 @@ builder.Services.AddDbContext<DataContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-/* builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); */
-
+builder.Services.AddCors(); //This will allow Angular app to call this api
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,11 +19,13 @@ var app = builder.Build();
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-} */
+} 
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthorization();*/
+
+app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200")); //This will allow Angular app to call this api
 
 app.MapControllers();
 
