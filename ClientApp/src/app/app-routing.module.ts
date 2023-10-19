@@ -1,7 +1,39 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { MemberListComponent } from './members/member-list/member-list.component';
+import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { ListsComponent } from './lists/lists.component';
+import { MessagesComponent } from './messages/messages.component';
+import { authGuard } from './_guards/auth.guard';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path: '', component: HomeComponent},
+  //{path: 'members', component: MemberListComponent}, //this can be access even the user not logged in
+  //{path: 'members/:id', component: MemberDetailComponent}, //this can be access even the user not logged in
+  //{path: 'lists', component: ListsComponent}, //this can be access even the user not logged in
+  //{path: 'messages', component: MessagesComponent}, //this can be access even the user not logged in
+
+  //Below can be used to safeGuard everything in the menu
+  {path: '', 
+      runGuardsAndResolvers: 'always',
+      canActivate: [authGuard],
+      children: [
+        {path: 'members', component: MemberListComponent},
+        {path: 'members/:id', component: MemberDetailComponent},
+        {path: 'lists', component: ListsComponent},
+        {path: 'messages', component: MessagesComponent},
+      ]
+  },
+
+  //Below can be used to safeGuard each single components in the menu
+  /*{path: 'members', component: MemberListComponent, canActivate:[authGuard]},
+  {path: 'members/:id', component: MemberDetailComponent, canActivate:[authGuard]},
+  {path: 'lists', component: ListsComponent, canActivate:[authGuard]},
+  {path: 'messages', component: MessagesComponent, canActivate:[authGuard]}, */
+
+  {path: '**', component: HomeComponent, pathMatch: 'full'},
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
