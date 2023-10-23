@@ -9,7 +9,7 @@ import { User } from '../_models/user';
 export class AccountService {
 
   //Declaring
-  baseUrl = 'http://localhost:5001/api/';
+  baseUrl = 'https://localhost:5001/api/';
 
   //To retrieved stored user logins from Cookies or LocalStorage
   //private currentUserSource = new BehaviorSubject<any>(null);
